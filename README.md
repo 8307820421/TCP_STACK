@@ -1,1 +1,1 @@
-# TCP_STACK_IN_C
+# TCP_STACK_IN_Verilog
