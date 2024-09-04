@@ -19,9 +19,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 /*
-  The alternate case for axis fifo is that :  do not wait t_ready to high and write and read the 
-  data when t_valid high in master master pins.
-  The rd_ptr and wr_ptr pointer will decode the address and wr and rd the data .
+This fifois also a data buffer for wr and rd 
+but here this data buffer also controll bram module for giving the address and enabling the read module
+hence it acts as controller as well as buffer to transfer the data to next module (packet buffer).
 */
 
 module axis_fifo_alternate #(
