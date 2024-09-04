@@ -24,7 +24,7 @@ but here this data buffer also controll bram module for giving the address and e
 hence it acts as controller as well as buffer to transfer the data to next module (packet buffer).
 */
 
-module axis_fifo_alternate #(
+module data_buffer #(
    parameter mem_depth = 1024,// buffer size 1KB
    parameter data_bits = 512,
    parameter address_bits = 10
