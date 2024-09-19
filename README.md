@@ -32,8 +32,9 @@ Problem statement :
                    suppose , you have scaling factor is 8,
                       then , effective_window size  = base window size * 2(^8) = 65535 *256 = 524,280 bytes.
   This allows the TCP receiver to handle a much larger window size than the default 65,535 bytes.  
- # The scalingin verilog is done by shifiting opertation (right shift) : 
+ # The scalingin verilog is done by shifiting opertation (left shift) : 
       always @(*) begin
-  effective_window_size = base_window_size << window_scale_factor; // Shift left by scaling factor (2^S)
-end
+        effective_window_size = base_window_size << window_scale_factor; 
+      end
  // Compute the effective window size with scaling
+ // Shift left by scaling factor (2^S)
