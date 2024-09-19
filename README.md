@@ -33,8 +33,8 @@ Problem statement :
                       then , effective_window size  = base window size * 2(^8) = 65535 *256 = 524,280 bytes.
   This allows the TCP receiver to handle a much larger window size than the default 65,535 bytes.  
  # The scalingin verilog is done by shifiting opertation (right shift) : 
+ // Compute the effective window size with scaling
       always @(*) begin
-  // Compute the effective window size with scaling
   effective_window_size = base_window_size << window_scale_factor; // Shift left by scaling factor (2^S)
 end
 
