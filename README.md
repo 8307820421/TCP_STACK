@@ -1,7 +1,10 @@
 # TCP_STACK_IN_Verilog
 ->Here I have developed the axis_write module with testbench
+
 ->Here I have also developed the axis_read module with testbench
+
 ->Here I also developed the data buffer module with test bench
+
 ->After this the transport layer or header structure tcp tx client FSM is created.(private to company).
 
 # The TCP packet builder is left  for building :
