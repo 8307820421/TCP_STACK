@@ -38,3 +38,16 @@ Problem statement :
       end
  // Compute the effective window size with scaling
  // Shift left by scaling factor (2^S)
+
+ # TCP_Length for TCP header :- 
+ The TCP length is not the integral part of the TCP header structure but it calcuates the  (TCP header + TCP payload data )length.
+ The Header is constant if we are not including the options and padding field.
+ But the TCP payload data is changing based upon the how much bytes of data receiving from kernel . Also, the payload data is tracked through the counter that plays a crucial role 
+ to find the payload data bytes.
+ The logic behind this :- 
+tcp_length <= (tcp_headero_bits / 8) + (count * (data_bits / 8));
+
+# Initialization: Set tcp_length to 0 during reset.
+Update on Write: When new data is written to the FIFO, the tcp_length is updated to reflect the addition of that data.
+Update on Read: When data is read from the FIFO, the tcp_length is recalculated to account for the remaining data.
+ 
