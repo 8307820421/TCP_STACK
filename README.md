@@ -144,8 +144,11 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
 
 # Summary:
  -> The TCP length field can hold values up to 65535 bytes, but in practice, the packet size (TCP header + data) is limited by the MTU of the network.
+ 
  -> The Ethernet MTU (1500 bytes) ensures that most TCP packets are much smaller than the theoretical 65535-byte limit.
+ 
  -> Fragmentation occurs if a packet size exceeds the MTU, but it’s usually avoided to improve network efficiency.
+ 
  -> The typical TCP packet size in most scenarios is around 1460 bytes of payload (MTU of 1500 bytes, minus 40 bytes for IP and TCP headers). Therefore, the maximum TCP length of 65535 
    bytes is rarely, if ever, reached in practical networks.
 
