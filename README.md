@@ -143,7 +143,7 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
  ->   The Ethernet MTU is 1500 bytes.
  ->   The IP header takes 20 bytes, and the TCP header takes 20 bytes.
  ->   The total packet size is 1040 bytes (20 bytes IP header + 20 bytes TCP header + 1000 bytes of data), which fits within the MTU, so it’s sent as a single packet.
-->    If you wanted to send 70,000 bytes, which exceeds the 65535-byte limit in the TCP length field, it would need to be sent in multiple segments, each respecting the network’s MTU 
+ ->    If you wanted to send 70,000 bytes, which exceeds the 65535-byte limit in the TCP length field, it would need to be sent in multiple segments, each respecting the network’s MTU 
      limit.
 
 # Summary:
@@ -155,6 +155,61 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
  
  -> The typical TCP packet size in most scenarios is around 1460 bytes of payload (MTU of 1500 bytes, minus 40 bytes for IP and TCP headers). Therefore, the maximum TCP length of 65535 
    bytes is rarely, if ever, reached in practical networks.
+
+# Module that are not required for HFT in verilog of TCP for FPGA :
+
+         For a TCP client side in Verilog for High-Frequency Trading (HFT) on an FPGA, the primary focus is on achieving low latency and high throughput. 
+         Given the nature of HFT networks (often optimized, low-latency, and dedicated), certain features of TCP might be unnecessary or even detrimental. 
+         Here's a breakdown of what might not be required:
+
+# 1. Congestion Control Mechanisms (NOT REQUIRED)
+         -> Reason: In HFT, the network infrastructure is typically designed to be congestion-free. The networks are often private or optimized for low latency, 
+                      with minimal risk of congestion.
+          
+# Modules to Skip:
+           ->Slow Start: Gradually increasing the transmission rate is unnecessary in HFT, where you want to maximize speed from the start.
+           ->Congestion Avoidance: Not needed as network congestion is rarely a concern in such specialized, dedicated networks.
+           ->Congestion Window (cwnd): Typically used to control the flow of unacknowledged packets, but in HFT, you aim for the lowest latency without congestion, so limiting the 
+                                       packet flow is not beneficial.
+# 2. Nagle's Algorithm (NOT REQUIRED)
+           -> Reason: Nagle's algorithm is used to reduce the number of small packets sent over the network by combining them, but in HFT, where latency is critical,
+              sending small packets immediately (without delay) is more important.
+           -> Modules to Skip: No need to implement any form of packet combining or delay before sending small packets.
+
+# 3. TIME-WAIT State (NOT REQUIRED)
+           ->  Reason: The TIME-WAIT state is meant to handle delayed packets after connection termination, but in HFT, connections are often long-lived or reused,
+             and the overhead of waiting for delayed packets is not critical.
+           ->  Modules to Skip: Skip any logic that manages TIME-WAIT state, including timers that hold the connection open after it closes.
+
+# 4. Full Retransmission Timeout (RTO) Implementation (POSSIBLY SIMPLIFIED)
+          -> Reason: In HFT, minimal latency is essential, and relying on a long timeout for packet loss detection is not efficient. While RTO is a basic recovery mechanism, 
+                      you might prefer Fast Retransmit for quicker recovery.
+          -> Modules to Consider: You can simplify the RTO implementation or skip the full back-off and exponential timeout management, focusing more on quick detection and 
+                                  retransmission.
+
+# 5. Flow Control (Receive Window) (NOT REQUIRED)
+          -> Reason: Flow control is meant to prevent the sender from overwhelming the receiver's buffer. In HFT environments, both sender and receiver are typically 
+                     high-performance systems with ample buffering capabilities.
+          -> Modules to Skip: Any detailed implementation of adjusting the window size based on the receiver's buffer availability can be minimized.
+
+# Summary of What You Can Skip:
+   -> Congestion control (Slow Start, Congestion Avoidance, Congestion Window).
+   -> Nagle’s algorithm.
+   -> TIME-WAIT state management.
+   -> Full RTO complexity (simplify if required).
+   -> Flow control mechanisms (Receive Window management).
+   -> These optimizations reduce overhead and allow you to focus on fast packet handling with minimal latency, which is critical for HFT on FPGA.
+
+# Modules That Are Required for TCP in HFT on FPGA:
+    -> Three-Way Handshake (SYN, SYN-ACK, ACK):
+    -> You need to establish a reliable connection quickly.
+    -> Fast Retransmit:For quick recovery from packet loss (preferably without waiting for RTO).
+    -> Checksum Calculation:Ensuring data integrity in every TCP segment is important, so checksum logic is essential.
+    -> Packet Assembly/Disassembly:Building TCP segments on the TX side and extracting them on the RX side is critical.
+    -> Ack and Seq Number Management:Reliable packet transmission still requires proper sequence and acknowledgment number management to ensure data is correctly ordered.
+    -> Error Detection (RST, SYN, FIN flags):Handle flags for managing connection reset, establishment, and closure.
+    -> Minimal Retransmission Logic:Implement minimal retransmission logic for lost packets but without the full complexity of standard TCP retransmission algorithms like exponential 
+       backoff.
 
 
 
