@@ -194,10 +194,15 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
 
 # Summary of What You Can Skip:
    -> Congestion control (Slow Start, Congestion Avoidance, Congestion Window).
+   
    -> Nagle’s algorithm.
+   
    -> TIME-WAIT state management.
+   
    -> Full RTO complexity (simplify if required).
+   
    -> Flow control mechanisms (Receive Window management).
+   
    -> These optimizations reduce overhead and allow you to focus on fast packet handling with minimal latency, which is critical for HFT on FPGA.
 
 # Modules That Are Required for TCP in HFT on FPGA:
