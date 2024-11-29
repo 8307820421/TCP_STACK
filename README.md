@@ -216,7 +216,12 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
     -> Minimal Retransmission Logic:Implement minimal retransmission logic for lost packets but without the full complexity of standard TCP retransmission algorithms like exponential 
        backoff.
 
+# HEADER FIELD EXTRACTION FROM NSE :
+   -----> FOR HFT SPECIFIC APPLICATION ---> THE SRC IP AND DEST IP ARE HARDCODED , Hence things are not required here:-
+         1) ARP PROTOCOL because it help to resolve the destination address for different apllication but I am developing for HFT specific Hence the this protocol
+            is not required.
 
+        
 
 
  
