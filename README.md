@@ -215,6 +215,9 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
     -> Error Detection (RST, SYN, FIN flags):Handle flags for managing connection reset, establishment, and closure.
     -> Minimal Retransmission Logic:Implement minimal retransmission logic for lost packets but without the full complexity of standard TCP retransmission algorithms like exponential 
        backoff.
+    -> Buffer (FIFO) and BRAM (Memory) also required.
+    -> Ethernet Header MUX also required.
+    
 # RFC documentation that help to build the packet structure :
        1) RFC 793 (FSM PART).
        2) RFC 791 (More about TCP).
