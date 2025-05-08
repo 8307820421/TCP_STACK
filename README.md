@@ -206,7 +206,7 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
    -> These optimizations reduce overhead and allow you to focus on fast packet handling with minimal latency, which is critical for HFT on FPGA.
 
 # Modules That Are Required for TCP in HFT on FPGA:
-    -> Three-Way Handshake (SYN, SYN-ACK, ACK):
+    -> Three-Way Handshake (SYN, SYN-ACK, ACK):RFC793
     -> You need to establish a reliable connection quickly.
     -> Fast Retransmit:For quick recovery from packet loss (preferably without waiting for RTO).
     -> Checksum Calculation:Ensuring data integrity in every TCP segment is important, so checksum logic is essential.
@@ -215,11 +215,15 @@ Networks are configured to avoid sending packets that exceed the MTU because lar
     -> Error Detection (RST, SYN, FIN flags):Handle flags for managing connection reset, establishment, and closure.
     -> Minimal Retransmission Logic:Implement minimal retransmission logic for lost packets but without the full complexity of standard TCP retransmission algorithms like exponential 
        backoff.
+# RFC documentation that help to build the packet structure :
+       1) RFC 793 (FSM PART).
+       2) RFC 791 (More about TCP).
+       3) RFC 1323 (options , kind , timestamp detailing).
+       4) RFC 1180 (TCP advanced features)
+       5) RFC 6268 (RTO TCP).
+       6) RFC 2988 (RTT).
 
-# HEADER FIELD EXTRACTION FROM NSE :
-   -----> FOR HFT SPECIFIC APPLICATION ---> THE SRC IP AND DEST IP ARE HARDCODED , Hence things are not required here:-
-         1) ARP PROTOCOL because it help to resolve the destination address for different apllication but I am developing for HFT specific Hence the this protocol
-            is not required.
+
 
         
 
